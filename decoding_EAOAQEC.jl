@@ -785,16 +785,14 @@ end
 
 
 function main()
-for m in 4:4
    # Generate the syndrome to coset transversal dictionary
     success, missing_syndrome, t_s_dict = generate_min_weight_syndrome_table(S,3,5)
 
     if success != -1
-        println("\n\n\n m = ", m, "\n\n\n")
         # choose the errors
         #e1 = (generate_X_error([1, m], 13) + L[1,:]).%2
         e1 =  generate_X_error([2], 13)
-        e2 = (generate_X_error([1, m], 13)).%2 
+        e2 = (generate_X_error([1, ], 13)).%2 
 
         # Obtain the syndromes
         s1 = get_syndrome(S, e1)
@@ -899,13 +897,10 @@ for m in 4:4
         println("r2_two_level_2 = ", print_pauli_operators(r2_two_level_2', true), ", lowest weight operator in coset: ", print_pauli_operators(lowest_weight_coset_vector(l2_twolevel_2, t2_twolevel_2, S, G), true))
 
         # Check if the syndrome of the recovery operator is equal to that of the error
-        @assert any(get_syndrome(S, row) == (get_syndrome(S, r2_two_level_2) .⊻ s2) for row in eachrow(T_0))
-
-        
-else
-    println("missing syndromes = ", missing_syndrome)
-end
-end
+        @assert any(get_syndrome(S, row) == (get_syndrome(S, r2_two_level_2) .⊻ s2) for row in eachrow(T_0)) 
+    else
+        println("missing syndromes = ", missing_syndrome)
+    end
 end
 
 main()
