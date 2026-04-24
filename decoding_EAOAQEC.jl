@@ -652,7 +652,7 @@ function decode_EAOAQEC_two_level(s_bar, S, G, L, T_0, p, t_s_dict)
 
     println("\n","Stage 2 coset probability list:")
     
-    # 2. Iterate over all elements t in T_0_q (rowspace of the matrix T_0)
+    # 2. Iterate over all elements t in T_0_q (rowspace  of the matrix T_0)
     for i in 1:num_T0_q_rows
         t = BitVector(T_0_q[i,:])        
             # Prepare the second argument: (t + t_s_bar) mod 2
@@ -735,7 +735,7 @@ function decode_EAOAQEC_two_level_type2(s_bar, S, G, L, T_0, p, t_s_dict)
         end
         
         # Print total accumulated probability for this gauge operator t
-        println("prob = ", prob, ", coset representative = ", print_pauli_operators((l .⊻ t_combined)', true))
+        println("prob = ", prob, ", normalizer coset transversal representative = ", print_pauli_operators((t_combined)', true), ", t row num = ", i)
         
         # Update the maximum probability and store the optimal t
         if prob > max_prob
@@ -768,7 +768,7 @@ function decode_EAOAQEC_two_level_type2(s_bar, S, G, L, T_0, p, t_s_dict)
         # Calculate the specific coset probability for this logical operator l
         prob = calculate_coset_probability(BitMatrix(Bool.(S)), BitMatrix(Bool.(G)), l, t_combined, p)
         
-        println("prob = ", prob, ",  coset representative = ", print_pauli_operators((l .⊻ t_combined)', true))
+        println("prob = ", prob, ",  coset representative = ", print_pauli_operators((l .⊻ t_combined)', true), ", L coeff = ", coeffs)
         
         # Check if current probability is the maximum; if so, update max_prob and store optimal l
         if prob > max_prob
